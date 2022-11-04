@@ -11,4 +11,6 @@ type Server struct {
 	Port    int    `yaml:"port"`
 	TLS     bool   `yaml:"tls"`
 	Timeout int    `yaml:"timeout"`
+	MaxIdle string `yaml:"maxIdle"`
+	MaxAge  string `yaml:"maxAge"`
 }

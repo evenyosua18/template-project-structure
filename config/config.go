@@ -1,6 +1,7 @@
 package config
 
 import (
+	"fmt"
 	"github.com/evenyosua18/template-project-structure/config/database"
 	"github.com/evenyosua18/template-project-structure/config/server"
 	"gopkg.in/yaml.v3"
@@ -62,6 +63,8 @@ func init() {
 	}
 
 	cfg.Database = databaseConf
+
+	fmt.Println(cfg)
 }
 
 func GetConfig() *configuration {
