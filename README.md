@@ -29,7 +29,7 @@ Have 3 main layer
 - output can be a grpc, rest, graphql, consumer, scheduler, and many more
 - there is a builder which will adjust the data for the chosen output
 
-** in this example is using grpc as the output. I suggest if you need more than one output, create a gateway  
+** in this example is using grpc as the output. I suggest if you need more than one output, create a gateway and run separately 
 
 #### Domain
 - consist of entity and repository
