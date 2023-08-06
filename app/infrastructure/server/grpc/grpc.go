@@ -2,10 +2,9 @@ package grpc
 
 import (
 	"fmt"
+	"github.com/evenyosua18/template-project-structure/app/infrastructure/container"
 	"github.com/evenyosua18/template-project-structure/app/infrastructure/proto/pb"
-	exampleSvc "github.com/evenyosua18/template-project-structure/app/infrastructure/server/grpc/service/example"
-	"github.com/evenyosua18/template-project-structure/app/usecase"
-	exampleUc "github.com/evenyosua18/template-project-structure/app/usecase/example"
+	"github.com/evenyosua18/template-project-structure/app/infrastructure/server/grpc/service/user"
 	"github.com/evenyosua18/template-project-structure/config"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/keepalive"
@@ -52,11 +51,8 @@ func RunServer() {
 	//create grpc server
 	grpcServer := grpc.NewServer(options...)
 
-	//setup dependency injection for use case (interaction)
-	ctn := usecase.NewContainer()
-
 	//register grpc server
-	Apply(grpcServer, ctn)
+	Apply(grpcServer)
 	reflection.Register(grpcServer)
 
 	//run grpc server
@@ -82,6 +78,6 @@ func RunServer() {
 }
 
 // Apply register all service here
-func Apply(server *grpc.Server, ctn *usecase.Container) {
-	pb.RegisterExampleServiceServer(server, exampleSvc.NewServiceExample(ctn.Resolve("exampleCTN").(*exampleUc.InteractionExample)))
+func Apply(server *grpc.Server) {
+	pb.RegisterUserServiceServer(server, user.NewUserService(container.InitializeUserInteraction()))
 }
