@@ -5,8 +5,8 @@ import (
 	"github.com/evenyosua18/template-project-structure/config/database"
 	"github.com/evenyosua18/template-project-structure/config/server"
 	"gopkg.in/yaml.v3"
-	"io/ioutil"
 	"log"
+	"os"
 	"path/filepath"
 	"runtime"
 )
@@ -17,8 +17,8 @@ type configuration struct {
 }
 
 const (
-	serverLocation   = `\server\server.yml`
-	databaseLocation = `\database\database.yml`
+	serverLocation   = `/server/server.yml`
+	databaseLocation = `/database/database.yml`
 )
 
 var (
@@ -40,7 +40,7 @@ func init() {
 	var serverFile []byte
 	var serverConf server.ConfigServer
 
-	if serverFile, err = ioutil.ReadFile(location + serverLocation); err != nil {
+	if serverFile, err = os.ReadFile(location + serverLocation); err != nil {
 		panic(err)
 	}
 
@@ -54,7 +54,7 @@ func init() {
 	var databaseFile []byte
 	var databaseConf database.ListDatabase
 
-	if databaseFile, err = ioutil.ReadFile(location + databaseLocation); err != nil {
+	if databaseFile, err = os.ReadFile(location + databaseLocation); err != nil {
 		panic(err)
 	}
 

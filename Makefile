@@ -7,7 +7,7 @@ protoc: clean
 	@mkdir -p app/infrastructure/proto/pb
 
 	@echo "--- Compiling all proto files ---"
-	@cd ./app/infrastructure/proto && protoc -I. --go_out=plugins=grpc:./pb --govalidators_out=./pb *.proto
+	@cd ./app/infrastructure/proto && protoc --go_out=./pb --go_opt=paths=source_relative --go-grpc_out=./pb --go-grpc_opt=paths=source_relative *.proto
 
 setup:
 	@echo " --- Setup and generate configuration --- "
@@ -31,3 +31,7 @@ run-grpc:
 
 migrate:
 	@go run cmd/migrate/migrate.go
+
+wire:
+	@echo "-- generate dependency injection --"
+	@wire ./app/infrastructure/container/
