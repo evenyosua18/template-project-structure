@@ -35,4 +35,4 @@ Have 3 main layer
 
 - every layer must be stand-alone 
 - naming convention is important
-- you can see the implementation in [here](https://github.com/evenyosua18/oauth)
+- you can see the implementation in [here](https://github.com/evenyosua18/auth2)
