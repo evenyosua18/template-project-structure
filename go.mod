@@ -13,6 +13,7 @@ require (
 require (
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/google/wire v0.5.0 // indirect
+	github.com/joho/godotenv v1.5.1 // indirect
 	github.com/stretchr/testify v1.8.4 // indirect
 	golang.org/x/net v0.0.0-20201021035429-f5854403a974 // indirect
 	golang.org/x/sys v0.0.0-20210119212857-b64e53b001e4 // indirect

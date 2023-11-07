@@ -1,7 +1,9 @@
 package user
 
+import "context"
+
 type IUserRepository interface {
-	GetUser()
+	GetUser(ctx context.Context, in interface{}) (interface{}, error)
 }
 
 type RepositoryUser struct {

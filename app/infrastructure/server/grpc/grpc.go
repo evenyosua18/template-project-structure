@@ -2,10 +2,11 @@ package grpc
 
 import (
 	"fmt"
+	"github.com/evenyosua18/template-project-structure/app/constant"
 	"github.com/evenyosua18/template-project-structure/app/infrastructure/container"
 	"github.com/evenyosua18/template-project-structure/app/infrastructure/proto/pb"
 	"github.com/evenyosua18/template-project-structure/app/infrastructure/server/grpc/service/user"
-	"github.com/evenyosua18/template-project-structure/config"
+	"github.com/joho/godotenv"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/keepalive"
 	"google.golang.org/grpc/reflection"
@@ -20,28 +21,15 @@ import (
 func RunServer() {
 	/*start service*/
 
-	//get config
-	cfg := config.GetConfig().Server
+	//setup environment variable (for local)
+	if _, err := os.Stat(".env"); err == nil {
+		if err := godotenv.Load(".env"); err != nil {
+			panic(err)
+		}
+	}
 
 	//config grpc server
 	var options []grpc.ServerOption
-	//maxIdle, err := time.ParseDuration(cfg.Grpc.MaxIdle + "h")
-	//
-	//if err != nil {
-	//	panic(err)
-	//}
-	//
-	//maxAge, err := time.ParseDuration(cfg.Grpc.MaxAge + "m")
-	//
-	//if err != nil {
-	//	panic(err)
-	//}
-	//
-	//maxAgeGrace, err := time.ParseDuration(cfg.Grpc.MaxAge + "s")
-	//
-	//if err != nil {
-	//	panic(err)
-	//}
 	options = append(options, grpc.KeepaliveParams(keepalive.ServerParameters{
 		MaxConnectionIdle:     1 * time.Hour,
 		MaxConnectionAge:      5 * time.Minute,
@@ -57,7 +45,7 @@ func RunServer() {
 
 	//run grpc server
 	go func() {
-		lis, err := net.Listen("tcp", fmt.Sprintf(`%s:%d`, cfg.Grpc.Host, cfg.Grpc.Port))
+		lis, err := net.Listen("tcp", fmt.Sprintf(`%s:%s`, os.Getenv(constant.GrpcHost), os.Getenv(constant.GrpcPort)))
 
 		if err != nil {
 			log.Fatalf("failed to listen: %v", err)
@@ -68,7 +56,7 @@ func RunServer() {
 		}
 	}()
 
-	log.Println(fmt.Sprintf("grpc server is running at %s:%d", cfg.Grpc.Host, cfg.Grpc.Port))
+	log.Println(fmt.Sprintf("grpc server is running at %s:%s", os.Getenv(constant.GrpcHost), os.Getenv(constant.GrpcPort)))
 
 	//get signal when server interrupted
 	c := make(chan os.Signal)
